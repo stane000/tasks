@@ -21,8 +21,10 @@ Example Usage:
 """
 
 import os
+import sys
 import pytest
 
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from CitySummaryAppTests.tools import ApplicationTestRunner, FileChecker
 
 
@@ -56,13 +58,15 @@ def test_city_summary_app(app_runner, city):
 
 # Test_2--------------------------------------------------------------------------------------------------------
 
-wrong_entries = ["hgff", "Python", "..", "??"]
+wrong_entries = ['""', "hgff", "Python", "..", "??"]
 
 @pytest.mark.app
 @pytest.mark.error
 @pytest.mark.parametrize("wrong_entire", wrong_entries)
 def test_city_summary_app_error_handling(app_runner, wrong_entire):
     result = app_runner.run_app(wrong_entire)
+    if wrong_entire == "":
+        assert "Entered value can't be empty string" in result, f"Expected error : Entered value can't be empty string, actual: {result}"
     assert  "not exists in database" in result, f"Expected error: not exists in database, actual error: {result}"
 
 # Example usage

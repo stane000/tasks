@@ -58,7 +58,7 @@ def test_city_summary_app(app_runner, city):
 
 # Test_2--------------------------------------------------------------------------------------------------------
 
-wrong_entries = ['""', "hgff", "Python", "..", "??"]
+wrong_entries = ["", "hgff", "Python", "..", "??"]
 
 @pytest.mark.app
 @pytest.mark.error
@@ -67,8 +67,9 @@ def test_city_summary_app_error_handling(app_runner, wrong_entire):
     result = app_runner.run_app(wrong_entire)
     if wrong_entire == "":
         assert "Entered value can't be empty string" in result, f"Expected error : Entered value can't be empty string, actual: {result}"
-    assert  "not exists in database" in result, f"Expected error: not exists in database, actual error: {result}"
+    else:
+        assert  "not exists in database" in result, f"Expected error: not exists in database, actual error: {result}"
 
 # Example usage
 if __name__ == "__main__":
-    pytest.main(["-v", "-s", "-m success", os.path.abspath(__file__)])
+    pytest.main(["-v", "-s", "-m error", os.path.abspath(__file__)])
